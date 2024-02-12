@@ -61,18 +61,18 @@ func Run() {
 		log.Fatal(err)
 	}
 
+	_, err = database.DB.Exec("INSERT INTO historico (value) VALUES (?)", moedasFiltradasJSON)
+	if err != nil {
+		fmt.Println("\n login39 - ", err)
+		return
+	}
+
 	if count >= 60 {
 		err := apagarPrimeiroHistorico()
 		if err != nil {
 			fmt.Println("\n login39 - ", err)
 			return
 		}
-	}
-
-	_, err = database.DB.Exec("INSERT INTO historico (value) VALUES (?)", moedasFiltradasJSON)
-	if err != nil {
-		fmt.Println("\n login39 - ", err)
-		return
 	}
 }
 
