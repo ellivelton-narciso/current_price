@@ -106,7 +106,7 @@ func precoAtualTodas() (allPrice []models.PriceResponse) {
 }
 
 func apagarPrimeiroHistorico() error {
-	qry := "DELETE FROM historico ORDER BY value LIMIT 1"
+	qry := "DELETE FROM historico ORDER BY id LIMIT 1"
 	_, err := database.DB.Exec(qry)
 	return err
 }

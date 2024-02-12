@@ -16,6 +16,7 @@ type ConfigStruct struct {
 }
 
 type Historico struct {
+	Id    int64           `json:"id"`
 	Value []PriceResponse `json:"value"`
 }
 
