@@ -11,6 +11,6 @@ func main() {
 	for {
 		server.Run()
 
-		time.Sleep(1 * time.Second)
+		time.Sleep(600 * time.Millisecond)
 	}
 }
