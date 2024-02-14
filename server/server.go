@@ -61,7 +61,7 @@ func Run() {
 		log.Fatal(err)
 	}
 
-	_, err = database.DB.Exec("INSERT INTO historico (value) VALUES (?)", moedasFiltradasJSON)
+	_, err = database.DB.Exec("INSERT INTO historico (value, created_at) VALUES (?, NOW())", moedasFiltradasJSON)
 	if err != nil {
 		fmt.Println("\n login39 - ", err)
 		return

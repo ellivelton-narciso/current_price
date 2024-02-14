@@ -1,5 +1,7 @@
 package models
 
+import "time"
+
 type PriceResponse struct {
 	Symbol string `json:"symbol"`
 	Price  string `json:"price"`
@@ -16,8 +18,9 @@ type ConfigStruct struct {
 }
 
 type Historico struct {
-	Id    int64           `json:"id"`
-	Value []PriceResponse `json:"value"`
+	Id        int64           `json:"id"`
+	Value     []PriceResponse `json:"value"`
+	CreatedAt time.Time       `json:"created_at"`
 }
 
 type Bots struct {
