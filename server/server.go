@@ -6,19 +6,28 @@ import (
 	"currentPrice/models"
 	"encoding/json"
 	"fmt"
+	"github.com/jmoiron/sqlx"
 	"io/ioutil"
 	"log"
 	"net/http"
 )
 
 func Run() {
+	var (
+		err                 error
+		rows                *sqlx.Rows
+		moedasFiltradas     []models.PriceResponse
+		bots                []models.Bots
+		moedasFiltradasJSON []byte
+		count               int
+	)
+
 	qry := "SELECT * FROM bots"
 
-	rows, err := database.DB.Queryx(qry)
+	rows, err = database.DB.Queryx(qry)
 	if err != nil {
 		log.Fatal(err)
 	}
-	var bots []models.Bots
 	for rows.Next() {
 		var bot models.Bots
 		err := rows.StructScan(&bot)
@@ -32,7 +41,6 @@ func Run() {
 
 	precoAtualTudo := precoAtualTodas()
 
-	var moedasFiltradas []models.PriceResponse
 	for _, preco := range precoAtualTudo {
 		for _, bot := range bots {
 			if preco.Symbol == bot.Coin {
@@ -41,20 +49,15 @@ func Run() {
 			}
 		}
 	}
-
-	var moedasFiltradasJSON []byte
 	if len(bots) == 0 {
 		moedasFiltradasJSON = []byte("[]")
 	} else {
-		var err error
 		moedasFiltradasJSON, err = json.Marshal(moedasFiltradas)
 		if err != nil {
 			fmt.Println("\n erro39 - ", err)
 			return
 		}
 	}
-
-	var count int
 	qry2 := "SELECT COUNT(*) FROM historico"
 	err = database.DB.Get(&count, qry2)
 	if err != nil {
@@ -67,8 +70,8 @@ func Run() {
 		return
 	}
 
-	if count >= 60 {
-		err := apagarPrimeiroHistorico()
+	if count >= config.Leituras {
+		err = apagarPrimeiroHistorico()
 		if err != nil {
 			fmt.Println("\n login39 - ", err)
 			return

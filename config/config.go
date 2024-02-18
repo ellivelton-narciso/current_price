@@ -8,13 +8,14 @@ import (
 )
 
 var (
-	Host    string
-	Port    string
-	DBname  string
-	User    string
-	Pass    string
-	BaseURL string
-	Config  *models.ConfigStruct
+	Host     string
+	Port     string
+	DBname   string
+	User     string
+	Pass     string
+	BaseURL  string
+	Leituras int
+	Config   *models.ConfigStruct
 )
 
 func ReadFile() {
@@ -33,4 +34,5 @@ func ReadFile() {
 	User = Config.User
 	Pass = Config.Pass
 	BaseURL = Config.BaseURL
+	Leituras = Config.Leituras
 }
