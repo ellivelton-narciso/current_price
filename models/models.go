@@ -9,13 +9,14 @@ type PriceResponse struct {
 }
 
 type ConfigStruct struct {
-	Host     string `json:"host"`
-	Port     string `json:"port"`
-	DBname   string `json:"dbname"`
-	User     string `json:"user"`
-	Pass     string `json:"pass"`
-	BaseURL  string `json:"baseURL"`
-	Leituras int    `json:"leituras"`
+	Host      string `json:"host"`
+	Port      string `json:"port"`
+	DBname    string `json:"dbname"`
+	User      string `json:"user"`
+	Pass      string `json:"pass"`
+	BaseURL   string `json:"baseURL"`
+	Leituras  int    `json:"leituras"`
+	TimeSleep int64  `json:"timeSleep"`
 }
 
 type Historico struct {
