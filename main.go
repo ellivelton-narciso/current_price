@@ -57,9 +57,7 @@ func processPrices(ctx context.Context, precoAtualTudo <-chan []models.PriceResp
 			return
 		case precoAtual := <-precoAtualTudo:
 			server.Run(precoAtual)
-
 			<-runTicker.C
-			server.Run2(precoAtual)
 		case <-ticker.C:
 			precoAtual := <-precoAtualTudo
 			server.Run2(precoAtual)
