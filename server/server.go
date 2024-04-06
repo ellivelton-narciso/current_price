@@ -24,7 +24,7 @@ func Run(precoAtualTudo []models.PriceResponse) {
 		count               int
 	)
 
-	qry := "SELECT * FROM bots"
+	qry := "select * from bots UNION select * from bots_real;"
 
 	rows, err = database.DB.Queryx(qry)
 	if err != nil {
