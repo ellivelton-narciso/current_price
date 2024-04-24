@@ -39,7 +39,7 @@ func updatePrices(ctx context.Context, precoAtualTudo chan<- []models.PriceRespo
 }
 
 func processPrices(ctx context.Context, precoAtualTudo <-chan []models.PriceResponse) {
-	defaultTimeSleep := 14
+	defaultTimeSleep := 15
 	timeSleep := config.TimeSleep
 	if timeSleep == 0 {
 		timeSleep = int64(defaultTimeSleep)

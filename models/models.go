@@ -26,5 +26,6 @@ type Historico struct {
 }
 
 type Bots struct {
-	Coin string `json:"coin"`
+	Symbol string `json:"symbol"`
+	User   string `json:"user"`
 }

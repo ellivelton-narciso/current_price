@@ -12,6 +12,7 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
+	"time"
 )
 
 func Run(precoAtualTudo []models.PriceResponse) {
@@ -24,7 +25,7 @@ func Run(precoAtualTudo []models.PriceResponse) {
 		count               int
 	)
 
-	qry := "select * from bots UNION select * from bots_real;"
+	qry := "select * from bots;"
 
 	rows, err = database.DB.Queryx(qry)
 	if err != nil {
@@ -43,7 +44,7 @@ func Run(precoAtualTudo []models.PriceResponse) {
 
 	for _, preco := range precoAtualTudo {
 		for _, bot := range bots {
-			if preco.Symbol == bot.Coin {
+			if preco.Symbol == bot.Symbol {
 				moedasFiltradas = append(moedasFiltradas, preco)
 				break
 			}
@@ -81,6 +82,10 @@ func Run(precoAtualTudo []models.PriceResponse) {
 
 func Run2(precoAtualTudo []models.PriceResponse) {
 
+	start := time.Now()
+	timeValue := time.Unix(0, start.UnixMilli()*int64(time.Millisecond))
+	started := timeValue.Format("2006-01-02 15:04:05")
+
 	var err error
 	var value float64
 
@@ -90,7 +95,7 @@ func Run2(precoAtualTudo []models.PriceResponse) {
 			fmt.Println(err)
 		}
 		if strings.Contains(p.Symbol, "USDT") {
-			_, err = database.DB.Exec("INSERT INTO hist_trading_values (hist_date, trading_name, curr_value) VALUES (NOW(), ?, ?)", p.Symbol, value)
+			_, err = database.DB.Exec("INSERT INTO hist_trading_values (hist_date, trading_name, curr_value) VALUES (?, ?, ?)", started, p.Symbol, value)
 			if err != nil {
 				fmt.Println("\n Erro ao inserir valores no banco de dados (Run2) - ", err)
 				return
